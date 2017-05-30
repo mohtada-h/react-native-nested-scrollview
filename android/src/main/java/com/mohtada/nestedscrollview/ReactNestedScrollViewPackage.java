@@ -10,8 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-
-public class NestedScrollViewPackage implements ReactPackage {
+public class ReactNestedScrollViewPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
         return Collections.emptyList();
@@ -29,4 +28,3 @@ public class NestedScrollViewPackage implements ReactPackage {
         );
     }
 }
-
