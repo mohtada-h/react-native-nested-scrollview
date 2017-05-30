@@ -26,9 +26,8 @@ allprojects {
         mavenLocal()
         jcenter()
         maven {
-            // For developing the library outside the context of the example app, expect `react-native`
-            // to be installed at `./node_modules`.
-            url "$projectDir/../example/node_modules/react-native/android"
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
         }
     }
 }
