@@ -1,6 +1,6 @@
 # react-native-nested-scrollview
 React native wrapper for android NestedScrollView.
-It's a fork from [react-native-bottom-sheet-behavior](https://github.com/cesardeazevedo/react-native-bottom-sheet-behavior)
+It's extract from [react-native-bottom-sheet-behavior](https://github.com/cesardeazevedo/react-native-bottom-sheet-behavior)
 
 ## Install
 
@@ -60,11 +60,12 @@ include ':app'
 
 ## Usage
 
-You will need to wrap your `ScrollView` into a `NestedScrollView` to make it work.
+You should use `NestedScrollView` instead of `ScrollView`.
 
 ```js
-    import {ScrollView} from 'react-native';
+
     import NestedScrollView from 'react-native-nested-scrollview';
+
 ```
 
 ```jsx
@@ -72,10 +73,10 @@ You will need to wrap your `ScrollView` into a `NestedScrollView` to make it wor
     render() {
       return (
           <NestedScrollView>
-            <ScrollView>
-            </ScrollView>
+            <NestedScrollView>
+            </NestedScrollView>
           </NestedScrollView>
-      )
+      );
     }
 
 ```
