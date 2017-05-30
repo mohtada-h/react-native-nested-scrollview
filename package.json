@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "React native wrapper for android NestedScrollView",
   "author": "Mohtada Hassanpour <mohtada.h@gmail.com>",
+  "homepage": "https://github.com/mohtada-h/react-native-nested-scrollview",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
@@ -13,9 +14,7 @@
     "scrollview"
   ],
   "dependencies": {
-    "prop-types": "^15.5.10",
-    "react": "16.0.0-alpha.6",
-    "react-native": "0.44.2"
+    "prop-types": "^15.5.10"
   },
   "devDependencies": {
     "babel-preset-react-native": "1.9.2"
