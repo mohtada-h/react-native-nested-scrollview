@@ -13,6 +13,10 @@
     "nested-scrollview",
     "scrollview"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohtada-h/react-native-nested-scrollview.git"
+  },
   "dependencies": {
     "prop-types": "^15.5.10"
   },
