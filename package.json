@@ -1,6 +1,6 @@
 {
   "name": "react-native-nested-scrollview",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React native wrapper for android NestedScrollView",
   "author": "Mohtada Hassanpour <mohtada.h@gmail.com>",
   "homepage": "https://github.com/mohtada-h/react-native-nested-scrollview",
