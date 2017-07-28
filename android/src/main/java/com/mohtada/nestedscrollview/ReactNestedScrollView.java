@@ -24,6 +24,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.OverScroller;
 import android.widget.ScrollView;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.ScrollerCompat;
+import java.lang.reflect.Method;
 
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.common.ReactConstants;
@@ -184,6 +187,26 @@ public class ReactNestedScrollView extends NestedScrollView implements ReactClip
         }
 
         return false;
+    }
+
+    
+    @Override 
+    protected void onDraw(Canvas canvas) { 
+        super.onDraw(canvas); 
+
+        try { 
+            Field mScroller = NestedScrollView.class.getDeclaredField("mScroller"); 
+            mScroller.setAccessible(true); 
+
+            Method isFinishedMethod = ScrollerCompat.class.getDeclaredMethod("isFinished"); 
+            boolean isFinished = (boolean) isFinishedMethod.invoke(mScroller.get(this)); 
+
+            if (!isFinished) { 
+                ViewCompat.postInvalidateOnAnimation(this); 
+            } 
+        } catch (Exception e) { 
+            // No need for actions 
+        } 
     }
 
     @Override
