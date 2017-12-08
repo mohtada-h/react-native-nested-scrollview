@@ -31,34 +31,46 @@ public class ReactNestedScrollViewHelper {
     public static final String AUTO = "auto";
     public static final String OVER_SCROLL_NEVER = "never";
 
+
     /**
      * Shared by {@link ReactScrollView} and {@link ReactHorizontalScrollView}.
      */
-    public static void emitScrollEvent(ViewGroup scrollView) {
-        emitScrollEvent(scrollView, ScrollEventType.SCROLL);
+    public static void emitScrollEvent(ViewGroup scrollView, float xVelocity, float yVelocity) {
+      emitScrollEvent(scrollView, ScrollEventType.SCROLL, xVelocity, yVelocity);
     }
 
     public static void emitScrollBeginDragEvent(ViewGroup scrollView) {
-        emitScrollEvent(scrollView, ScrollEventType.BEGIN_DRAG);
+      emitScrollEvent(scrollView, ScrollEventType.BEGIN_DRAG);
     }
 
-    public static void emitScrollEndDragEvent(ViewGroup scrollView) {
-        emitScrollEvent(scrollView, ScrollEventType.END_DRAG);
+    public static void emitScrollEndDragEvent(
+        ViewGroup scrollView,
+        float xVelocity,
+        float yVelocity) {
+      emitScrollEvent(scrollView, ScrollEventType.END_DRAG, xVelocity, yVelocity);
     }
 
     public static void emitScrollMomentumBeginEvent(ViewGroup scrollView) {
-        emitScrollEvent(scrollView, ScrollEventType.MOMENTUM_BEGIN);
+      emitScrollEvent(scrollView, ScrollEventType.MOMENTUM_BEGIN);
     }
 
     public static void emitScrollMomentumEndEvent(ViewGroup scrollView) {
-        emitScrollEvent(scrollView, ScrollEventType.MOMENTUM_END);
+      emitScrollEvent(scrollView, ScrollEventType.MOMENTUM_END);
     }
 
     private static void emitScrollEvent(ViewGroup scrollView, ScrollEventType scrollEventType) {
+      emitScrollEvent(scrollView, scrollEventType, 0, 0);
+    }
+
+    private static void emitScrollEvent(
+          ViewGroup scrollView,
+          ScrollEventType scrollEventType,
+          float xVelocity,
+          float yVelocity) {
         View contentView = scrollView.getChildAt(0);
 
         if (contentView == null) {
-            return;
+          return;
         }
 
         ReactContext reactContext = (ReactContext) scrollView.getContext();
@@ -68,6 +80,8 @@ public class ReactNestedScrollViewHelper {
                 scrollEventType,
                 scrollView.getScrollX(),
                 scrollView.getScrollY(),
+                xVelocity,
+                yVelocity,
                 contentView.getWidth(),
                 contentView.getHeight(),
                 scrollView.getWidth(),

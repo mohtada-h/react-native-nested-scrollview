@@ -29,6 +29,7 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.views.scroll.FpsListener;
 import com.facebook.react.views.scroll.OnScrollDispatchHelper;
+import com.facebook.react.views.scroll.VelocityHelper;
 import com.facebook.react.uimanager.MeasureSpecAssertions;
 import com.facebook.react.uimanager.events.NativeGestureUtil;
 import com.facebook.react.uimanager.ReactClippingViewGroup;
@@ -53,6 +54,7 @@ public class ReactNestedScrollView extends NestedScrollView implements ReactClip
 
     private final OnScrollDispatchHelper mOnScrollDispatchHelper = new OnScrollDispatchHelper();
     private final OverScroller mScroller;
+    private final VelocityHelper mVelocityHelper = new VelocityHelper();
 
     private @Nullable Rect mClippingRect;
     private boolean mDoneFlinging;
@@ -153,20 +155,23 @@ public class ReactNestedScrollView extends NestedScrollView implements ReactClip
 //    }
 
     @Override
-    protected void onScrollChanged(int x, int y, int oldX, int oldY) {
+      protected void onScrollChanged(int x, int y, int oldX, int oldY) {
         super.onScrollChanged(x, y, oldX, oldY);
 
         if (mOnScrollDispatchHelper.onScrollChanged(x, y)) {
-            if (mRemoveClippedSubviews) {
-                updateClippingRect();
-            }
+          if (mRemoveClippedSubviews) {
+            updateClippingRect();
+          }
 
-            if (mFlinging) {
-                mDoneFlinging = false;
-            }
+          if (mFlinging) {
+            mDoneFlinging = false;
+          }
 
-            ReactNestedScrollViewHelper.emitScrollEvent(this);
-        }
+          ReactNestedScrollViewHelper.emitScrollEvent(
+            this,
+            mOnScrollDispatchHelper.getXFlingVelocity(),
+            mOnScrollDispatchHelper.getYFlingVelocity());
+      }
     }
 
     @Override
@@ -187,17 +192,22 @@ public class ReactNestedScrollView extends NestedScrollView implements ReactClip
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+      public boolean onTouchEvent(MotionEvent ev) {
         if (!mScrollEnabled) {
-            return false;
+          return false;
         }
 
+        mVelocityHelper.calculateVelocity(ev);
         int action = ev.getAction() & MotionEvent.ACTION_MASK;
         if (action == MotionEvent.ACTION_UP && mDragging) {
-            ReactNestedScrollViewHelper.emitScrollEndDragEvent(this);
-            mDragging = false;
-            disableFpsListener();
+          ReactNestedScrollViewHelper.emitScrollEndDragEvent(
+            this,
+            mVelocityHelper.getXVelocity(),
+            mVelocityHelper.getYVelocity());
+          mDragging = false;
+          disableFpsListener();
         }
+
         return super.onTouchEvent(ev);
     }
 
