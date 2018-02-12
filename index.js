@@ -636,7 +636,7 @@ if (Platform.OS === 'android') {
             onScrollEndDrag: true,
         }
     };
-    RCTScrollView = requireNativeComponent('RCTNestedScrollView', ScrollView, nativeOnlyProps);
+    RCTScrollView = requireNativeComponent('RCTScrollView', ScrollView, nativeOnlyProps);
 }
 
 module.exports = ScrollView;
